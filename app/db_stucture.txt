@@ -1,0 +1,11 @@
+// View for courses
+
+CREATE OR REPLACE VIEW eligible_course_view AS
+SELECT DISTINCT c.course_id, e.student_id
+FROM sj_courses c
+JOIN sj_months_enrollments e ON c.month_id = e.month_id AND c.batch_id = e.batch_id
+WHERE c.course_id IS NOT NULL AND c.month_id IS NOT NULL AND c.batch_id IS NOT NULL
+UNION
+SELECT course_id, student_id
+FROM sj_courses_special_allocations
+WHERE course_id IS NOT NULL AND student_id IS NOT NULL;
